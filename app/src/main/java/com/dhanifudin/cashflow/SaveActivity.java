@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.dhanifudin.cashflow.models.Transaction;
 
@@ -58,18 +59,26 @@ public class SaveActivity extends AppCompatActivity {
     }
 
     public void handleSubmit(View view) {
-        String description = descriptionInput.getText().toString();
-        int amount = Integer.parseInt(amountInput.getText().toString());
-        Transaction.Type type = getCheckedType();
+        if(descriptionInput == null){
+            Toast.makeText(this, "Isi deskripsi!", Toast.LENGTH_SHORT).show();
+        }else if(amountInput == null){
+            Toast.makeText(this, "Isi nominal!", Toast.LENGTH_SHORT).show();
+        }else if(typeRadioGroup == null){
+            Toast.makeText(this, "Pilih jenis!", Toast.LENGTH_SHORT).show();
+        }else{
+            String description = descriptionInput.getText().toString();
+            int amount = Integer.parseInt(amountInput.getText().toString());
+            Transaction.Type type = getCheckedType();
 
-        item.setDescription(description);
-        item.setAmount(amount);
-        item.setType(type);
+            item.setDescription(description);
+            item.setAmount(amount);
+            item.setType(type);
 
-        Intent in = new Intent();
-        in.putExtra(TRANSACTION_KEY, item);
-        in.putExtra(MainActivity.INDEX_KEY, index);
-        setResult(RESULT_OK, in);
-        finish();
+            Intent in = new Intent();
+            in.putExtra(TRANSACTION_KEY, item);
+            in.putExtra(MainActivity.INDEX_KEY, index);
+            setResult(RESULT_OK, in);
+            finish();
+        }
     }
 }
