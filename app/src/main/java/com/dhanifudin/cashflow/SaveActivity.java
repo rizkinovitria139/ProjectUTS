@@ -59,12 +59,14 @@ public class SaveActivity extends AppCompatActivity {
     }
 
     public void handleSubmit(View view) {
-        if(descriptionInput == null){
-            Toast.makeText(this, "Isi deskripsi!", Toast.LENGTH_SHORT).show();
-        }else if(amountInput == null){
-            Toast.makeText(this, "Isi nominal!", Toast.LENGTH_SHORT).show();
-        }else if(typeRadioGroup == null){
-            Toast.makeText(this, "Pilih jenis!", Toast.LENGTH_SHORT).show();
+        if (descriptionInput.getText().toString().isEmpty()) {
+            descriptionInput.setError("Isi Nama Deskripsi!");
+        }
+        else if (amountInput.getText().toString().isEmpty()) {
+            amountInput.setError("Isi Nominal!");
+        }
+        else if (typeRadioGroup.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(this, "Isi jenis!", Toast.LENGTH_SHORT).show();
         }else{
             String description = descriptionInput.getText().toString();
             int amount = Integer.parseInt(amountInput.getText().toString());

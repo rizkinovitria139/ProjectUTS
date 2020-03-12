@@ -21,6 +21,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity
     implements TransactionAdapter.OnItemTransactionListener {
 
@@ -35,6 +38,9 @@ public class MainActivity extends AppCompatActivity
     private TransactionAdapter adapter;
     private Account account;
 
+    Locale localeID = new Locale("in", "ID"); //definisi locale format Indonesia
+    NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID); //membuat format rupiah
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +51,7 @@ public class MainActivity extends AppCompatActivity
         welcomeText = findViewById(R.id.text_welcome);
         balanceText = findViewById(R.id.text_balance);
         transactionsView = findViewById(R.id.rv_transactions);
+
 
         FloatingActionButton fab = findViewById(R.id.fab); //button fab
         fab.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +116,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onTransactionClicked(int index, Transaction item) {
         welcomeText.setText(String.format("Welcome %s", account.getName()));
-        balanceText.setText(String.valueOf(account.getBalance()));
+        balanceText.setText(formatRupiah.format(account.getBalance()));
 
 //        definisi intent dan pengiriman data transaction serta posisi index data
         Intent intent = new Intent(this, SaveActivity.class);
@@ -121,6 +128,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == RESULT_OK) {
             Transaction transaction = data.getParcelableExtra(TRANSACTION_KEY);
             if (requestCode == INSERT_REQUEST) {
@@ -131,7 +139,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             adapter.notifyDataSetChanged();//perubahan data
-            balanceText.setText(String.valueOf(account.getBalance()));
+            balanceText.setText(formatRupiah.format(account.getBalance()));
         }
     }
 }

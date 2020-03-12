@@ -58,7 +58,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public void bind(final int index, final Transaction item){
             descriptionText.setText(item.getDescription());
-            amountText.setText(item.getAmount());
+            amountText.setText(String.valueOf(item.getAmount()));
             //interaksi click
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
