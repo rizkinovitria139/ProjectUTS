@@ -46,11 +46,11 @@ public class MainActivity extends AppCompatActivity
         balanceText = findViewById(R.id.text_balance);
         transactionsView = findViewById(R.id.rv_transactions);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab); //button fab
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SaveActivity.class);
+            public void onClick(View view) { //onClick
+                Intent intent = new Intent(MainActivity.this, SaveActivity.class); //intent button fab
                 intent.putExtra(TRANSACTION_KEY, new Transaction());
                 startActivityForResult(intent, INSERT_REQUEST);
                 // TODO: Tambahkan event click fab di sini
@@ -108,46 +108,30 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onTransactionClicked(int index, Transaction item) {
-        welcomeText.setText(String.format("welcome %s", account.getName()));
+        welcomeText.setText(String.format("Welcome %s", account.getName()));
         balanceText.setText(String.valueOf(account.getBalance()));
 
-        adapter = new TransactionAdapter(account.getTransactions(), this);
-        transactionsView.setAdapter(adapter);
-
-        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this);
-        transactionsView.setLayoutManager(layoutManager);
-
-        Intent in = new Intent(this, SaveActivity.class); //definisi intent
-        in.putExtra(TRANSACTION_KEY, item); //pengiriman data transaksi
-        in.putExtra(INDEX_KEY, 0); //posisi index
-        startActivityForResult(in, UPDATE_REQUEST);
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-
-    public void handleFab(View view) {
-        Intent in = new Intent(MainActivity.this, SaveActivity.class);
-        in.putExtra(TRANSACTION_KEY, new Transaction());
-        startActivityForResult(in, INSERT_REQUEST);
+//        definisi intent dan pengiriman data transaction serta posisi index data
+        Intent intent = new Intent(this, SaveActivity.class);
+        intent.putExtra(TRANSACTION_KEY, item);
+        intent.putExtra(INDEX_KEY, 0);
+        startActivityForResult(intent, UPDATE_REQUEST);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             Transaction transaction = data.getParcelableExtra(TRANSACTION_KEY);
-            if(requestCode == INSERT_REQUEST){
-                account.addTransaction(transaction);
-            }else if(requestCode == UPDATE_REQUEST){
+            if (requestCode == INSERT_REQUEST) {
+                account.addTransaction(transaction); //pemanggilan data
+            } else if (requestCode == UPDATE_REQUEST) { //update data
                 int index = data.getIntExtra(INDEX_KEY, 0);
                 account.updateTransaction(index, transaction);
             }
-            adapter.notifyDataSetChanged(); //method yang memberitahukan kepada RecyclerView bahwa telah terjadi perubahan data
-            welcomeText.setText(String.valueOf(account.getBalance()));
+
+            adapter.notifyDataSetChanged();//perubahan data
+            balanceText.setText(String.valueOf(account.getBalance()));
         }
     }
 }
