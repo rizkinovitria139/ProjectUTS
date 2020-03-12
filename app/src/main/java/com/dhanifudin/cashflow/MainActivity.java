@@ -8,9 +8,11 @@ import com.dhanifudin.cashflow.models.Account;
 import com.dhanifudin.cashflow.models.Transaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,11 +50,37 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SaveActivity.class);
+                intent.putExtra(TRANSACTION_KEY, new Transaction());
+                startActivityForResult(intent, INSERT_REQUEST);
                 // TODO: Tambahkan event click fab di sini
             }
         });
 
+
         account = Application.getAccount();
+        adapter = new TransactionAdapter(account.getTransactions(), this);
+        transactionsView.setAdapter(adapter);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        transactionsView.setLayoutManager(layoutManager);
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) { //menswipe ke kiri atau ke kanan
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int index = viewHolder.getAdapterPosition();
+                account.removeTransaction(index);
+                adapter.notifyDataSetChanged();
+                balanceText.setText(String.valueOf(account.getBalance()));
+            }
+        };
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(simpleItemTouchCallBack);
+        mItemTouchHelper.attachToRecyclerView(transactionsView);
 
     }
 

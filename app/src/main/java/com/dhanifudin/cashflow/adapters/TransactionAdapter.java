@@ -14,6 +14,7 @@ import com.dhanifudin.cashflow.models.Transaction;
 import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
+
     public interface OnItemTransactionListener{
         void onTransactionClicked(int index, Transaction item);
     }
@@ -62,7 +63,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onTransactionClicked(index,item);
+                        listener.onTransactionClicked(index,item);
                 }
             });
         }
