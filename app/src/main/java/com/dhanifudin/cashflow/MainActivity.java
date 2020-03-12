@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.dhanifudin.cashflow.adapters.TransactionAdapter;
 import com.dhanifudin.cashflow.models.Account;
+import com.dhanifudin.cashflow.models.Transaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+    implements TransactionAdapter.OnItemTransactionListener {
 
     public static final String TRANSACTION_KEY = "TRANSACTION";
     public static final String INDEX_KEY = "INDEX";
@@ -71,5 +73,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTransactionClicked(int index, Transaction item) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
