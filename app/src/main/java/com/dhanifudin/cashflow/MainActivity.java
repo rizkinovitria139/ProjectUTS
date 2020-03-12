@@ -1,5 +1,6 @@
 package com.dhanifudin.cashflow;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.dhanifudin.cashflow.adapters.TransactionAdapter;
@@ -7,6 +8,7 @@ import com.dhanifudin.cashflow.models.Account;
 import com.dhanifudin.cashflow.models.Transaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -91,5 +93,25 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    public void handleFab(View view) {
+        Intent in = new Intent(MainActivity.this, SaveActivity.class);
+        in.putExtra(TRANSACTION_KEY, new Transaction());
+        startActivityForResult(in, INSERT_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK){
+            Transaction transaction = data.getParcelableExtra(TRANSACTION_KEY);
+            if(requestCode == INSERT_REQUEST){
+                account.addTransaction(transaction);
+            }
+            adapter.notifyDataSetChanged(); //method yang memberitahukan kepada RecyclerView bahwa telah terjadi perubahan data
+            welcomeText.setText(String.valueOf(account.getBalance()));
+        }
     }
 }

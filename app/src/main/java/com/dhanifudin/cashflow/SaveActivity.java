@@ -1,5 +1,6 @@
 package com.dhanifudin.cashflow;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,6 +10,9 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import com.dhanifudin.cashflow.models.Transaction;
+
+import static com.dhanifudin.cashflow.MainActivity.INSERT_REQUEST;
+import static com.dhanifudin.cashflow.MainActivity.TRANSACTION_KEY;
 
 public class SaveActivity extends AppCompatActivity {
 
@@ -29,7 +33,7 @@ public class SaveActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            item = extras.getParcelable(MainActivity.TRANSACTION_KEY);
+            item = extras.getParcelable(TRANSACTION_KEY);
             index = extras.getInt(MainActivity.INDEX_KEY, 0);
             descriptionInput.setText(item.getDescription());
             amountInput.setText(String.valueOf(item.getAmount()));
@@ -63,7 +67,7 @@ public class SaveActivity extends AppCompatActivity {
         item.setType(type);
 
         Intent in = new Intent();
-        in.putExtra(MainActivity.TRANSACTION_KEY, item);
+        in.putExtra(TRANSACTION_KEY, item);
         in.putExtra(MainActivity.INDEX_KEY, index);
         setResult(RESULT_OK, in);
         finish();
