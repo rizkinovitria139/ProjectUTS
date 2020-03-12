@@ -88,6 +88,11 @@ public class MainActivity extends AppCompatActivity
 
         RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this);
         transactionsView.setLayoutManager(layoutManager);
+
+        Intent in = new Intent(this, SaveActivity.class); //definisi intent
+        in.putExtra(TRANSACTION_KEY, item); //pengiriman data transaksi
+        in.putExtra(INDEX_KEY, 0); //posisi index
+        startActivityForResult(in, UPDATE_REQUEST);
     }
 
     @Override
@@ -109,6 +114,9 @@ public class MainActivity extends AppCompatActivity
             Transaction transaction = data.getParcelableExtra(TRANSACTION_KEY);
             if(requestCode == INSERT_REQUEST){
                 account.addTransaction(transaction);
+            }else if(requestCode == UPDATE_REQUEST){
+                int index = data.getIntExtra(INDEX_KEY, 0);
+                account.updateTransaction(index, transaction);
             }
             adapter.notifyDataSetChanged(); //method yang memberitahukan kepada RecyclerView bahwa telah terjadi perubahan data
             welcomeText.setText(String.valueOf(account.getBalance()));
