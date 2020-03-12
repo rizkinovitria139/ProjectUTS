@@ -9,6 +9,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
@@ -77,7 +78,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onTransactionClicked(int index, Transaction item) {
+        welcomeText.setText(String.format("welcome %s", account.getName()));
+        balanceText.setText(String.valueOf(account.getBalance()));
 
+        adapter = new TransactionAdapter(account.getTransactions(), this);
+        transactionsView.setAdapter(adapter);
+
+        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this);
+        transactionsView.setLayoutManager(layoutManager);
     }
 
     @Override
