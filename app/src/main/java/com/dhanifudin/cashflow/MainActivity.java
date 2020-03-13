@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.dhanifudin.cashflow.adapters.TransactionAdapter;
 import com.dhanifudin.cashflow.models.Account;
+import com.dhanifudin.cashflow.models.Session;
 import com.dhanifudin.cashflow.models.Transaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView transactionsView;
     private TransactionAdapter adapter;
     private Account account;
+    private Session session;
 
     Locale localeID = new Locale("in", "ID"); //definisi locale format Indonesia
     NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID); //membuat format rupiah
@@ -52,6 +54,13 @@ public class MainActivity extends AppCompatActivity
         balanceText = findViewById(R.id.text_balance);
         transactionsView = findViewById(R.id.rv_transactions);
 
+        session = Application.getSession();
+
+        if(!session.isLoggedIn()){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab); //button fab
         fab.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +72,6 @@ public class MainActivity extends AppCompatActivity
                 // TODO: Tambahkan event click fab di sini
             }
         });
-
 
         account = Application.getAccount();
         adapter = new TransactionAdapter(account.getTransactions(), this);
@@ -141,5 +149,6 @@ public class MainActivity extends AppCompatActivity
             adapter.notifyDataSetChanged();//perubahan data
             balanceText.setText(formatRupiah.format(account.getBalance()));
         }
+
     }
 }
