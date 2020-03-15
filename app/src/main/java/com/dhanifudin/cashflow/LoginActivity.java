@@ -32,6 +32,9 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean success = session.validate(username, password); //validasi
         if(success){
+            if(session.isKeepUsername()){
+                session.setUsername(username);
+            }
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
