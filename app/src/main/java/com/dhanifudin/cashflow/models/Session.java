@@ -7,6 +7,11 @@ import android.preference.PreferenceManager;
 public class Session {
     public static final String USERNAME_KEY = "key_username";
     public static final String TOKEN_KEY = "key_token";
+    public static final String KEEP_USERNAME_KEY = "key_keep_username";
+
+    public static String isKeepUsername() {
+        return KEEP_USERNAME_KEY;
+    }
 
     private SharedPreferences preferences;
 
