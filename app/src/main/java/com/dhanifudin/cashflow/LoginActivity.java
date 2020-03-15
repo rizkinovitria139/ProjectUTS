@@ -24,6 +24,10 @@ public class LoginActivity extends AppCompatActivity {
         usernameInput = findViewById(R.id.inputUsername);
         passwordInput = findViewById(R.id.inputPassword);
         session = Application.getSession();
+
+        if(session.isKeepUsername()){
+            usernameInput.setText(session.getUsername());
+        }
     }
 
     public void handleLogin(View view) {
