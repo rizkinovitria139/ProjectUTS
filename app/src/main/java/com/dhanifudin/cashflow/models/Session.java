@@ -9,11 +9,7 @@ public class Session {
     public static final String TOKEN_KEY = "key_token";
     public static final String KEEP_USERNAME_KEY = "key_keep_username";
 
-    public static String isKeepUsername() {
-        return KEEP_USERNAME_KEY;
-    }
-
-    private SharedPreferences preferences;
+    private static SharedPreferences preferences;
 
     public Session(Context context){
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -52,6 +48,10 @@ public class Session {
     public void logout(){
         preferences.edit().remove(TOKEN_KEY).apply();
         //logout dengan menghapus token
+    }
+
+    public static boolean isKeepUsername() {
+        return preferences.getBoolean(KEEP_USERNAME_KEY, false);
     }
 
 }
