@@ -9,7 +9,7 @@ public class Transaction implements Parcelable {
         STANDARD,
         PREMIUM
     }
-
+    private String image;
     private String namaPemilik;
     private String namaHewan;
     private Type type;
