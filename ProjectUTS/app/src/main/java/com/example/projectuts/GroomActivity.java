@@ -10,7 +10,7 @@ public class GroomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_groom);
+        setContentView(R.layout.save_groom);
     }
 
     public void handleSubmit(View view) {
