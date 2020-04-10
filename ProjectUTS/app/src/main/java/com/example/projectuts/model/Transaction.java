@@ -14,7 +14,6 @@ public class Transaction implements Parcelable {
         STANDARD,
         PREMIUM
     }
-    private Uri image;
     private String namaPemilik;
     private String namaHewan;
     private Type type;
@@ -22,19 +21,16 @@ public class Transaction implements Parcelable {
     private int amount;
 
     public int getAmount() {
+        if(type == Type.STANDARD){
+            setAmount(30000);
+        }else{
+            setAmount(50000);
+        }
         return amount;
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
-    }
-
-    public Uri getImage() {
-        return image;
-    }
-
-    public void setImage(Uri image) {
-        this.image = image;
     }
 
     public String getNamaPemilik() {
@@ -70,7 +66,6 @@ public class Transaction implements Parcelable {
     }
 
     public Transaction(Parcel in) {
-        this.image = (Uri) in.readValue(getClass().getClassLoader());
         this.namaHewan = in.readString();
         int tmpType = in.readInt();
         this.type = tmpType == -1 ? null : Type.values()[tmpType];
@@ -95,7 +90,8 @@ public class Transaction implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue((Uri)this.image);
+        dest.writeString(this.namaHewan);
+        dest.writeString(this.tanggal);
         dest.writeString(this.namaHewan);
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
     }

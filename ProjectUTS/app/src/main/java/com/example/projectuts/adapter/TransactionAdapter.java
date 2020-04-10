@@ -31,7 +31,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @NonNull
     @Override
-    public TransactionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_groom, parent, false);
         return new ViewHolder(view);
@@ -48,7 +48,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public int getItemCount() {
-        return 0;
+        return (items != null) ? items.size() : 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,7 +66,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
 
         public void bind(final int index, final Transaction item) {
-            imageView.setImageURI(item.getImage());
             namaHewan.setText(item.getNamaHewan());
             tanggal.setText(String.valueOf(item.getTanggal()));
             //interaksi click

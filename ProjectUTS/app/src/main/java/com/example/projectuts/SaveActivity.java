@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static com.example.projectuts.MainActivity.TRANSACTION_KEY;
+import static com.example.projectuts.MainActivity.INSERT_REQUEST;
 import static com.example.projectuts.R.*;
 
 public class SaveActivity extends AppCompatActivity {
